@@ -1,27 +1,51 @@
+ISO_NAME = PoroshenkoOS.iso
+
+KERNEL_SRC = kernel.c
+VGA_SRC = libs/vga.c
+KEYBOARD_SRC = libs/keyboard.c
+
+KERNEL_OBJ = kernel.o
+VGA_OBJ = vga.o
+KEYBOARD_OBJ = keyboard.o
+BOOT_OBJ = boot.o
+
+LD_SCRIPT = linker.ld
+
+CC = gcc
 CFLAGS = -m32 -ffreestanding -O2 -Wall -Wextra
-LDFLAGS = -T linker.ld -nostdlib
+LD = ld
+LDFLAGS = -m elf_i386 -T $(LD_SCRIPT) -nostdlib
 
-all: kernel.bin
+GRUB = grub-mkrescue
 
-boot.o: boot.s
-	as --32 boot.s -o boot.o
+ISO_DIR = iso
 
-kernel.o: kernel.c
-	gcc $(CFLAGS) -c kernel.c -o kernel.o
+all: $(ISO_NAME)
 
-kernel.bin: boot.o kernel.o linker.ld
-	ld -m elf_i386 $(LDFLAGS) -o kernel.bin boot.o kernel.o
+$(KERNEL_OBJ): $(KERNEL_SRC) libs/vga.h libs/keyboard.h
+	$(CC) $(CFLAGS) -c $(KERNEL_SRC) -o $(KERNEL_OBJ)
 
-iso: kernel.bin
-	mkdir -p iso/boot/grub
-	cp kernel.bin iso/boot/kernel.bin
-	echo 'set timeout=0' > iso/boot/grub/grub.cfg
-	echo 'set default=0' >> iso/boot/grub/grub.cfg
-	echo 'menuentry "Poroshenko OS" { multiboot /boot/kernel.bin }' >> iso/boot/grub/grub.cfg
-	grub-mkrescue -o PoroshenkoOS.iso iso
+$(VGA_OBJ): $(VGA_SRC) libs/vga.h
+	$(CC) $(CFLAGS) -c $(VGA_SRC) -o $(VGA_OBJ)
 
-run: iso
-	qemu-system-i386 -cdrom PoroshenkoOS.iso
+$(KEYBOARD_OBJ): $(KEYBOARD_SRC) libs/keyboard.h
+	$(CC) $(CFLAGS) -c $(KEYBOARD_SRC) -o $(KEYBOARD_OBJ)
+
+kernel.bin: $(BOOT_OBJ) $(KERNEL_OBJ) $(VGA_OBJ) $(KEYBOARD_OBJ) $(LD_SCRIPT)
+	$(LD) $(LDFLAGS) -o kernel.bin $(BOOT_OBJ) $(KERNEL_OBJ) $(VGA_OBJ) $(KEYBOARD_OBJ)
+
+$(ISO_NAME): kernel.bin
+	rm -rf $(ISO_DIR)
+	mkdir -p $(ISO_DIR)/boot/grub
+	cp kernel.bin $(ISO_DIR)/boot/kernel.bin
+	echo 'set timeout=0' > $(ISO_DIR)/boot/grub/grub.cfg
+	echo 'set default=0' >> $(ISO_DIR)/boot/grub/grub.cfg
+	echo 'menuentry "Poroshenko OS" { multiboot /boot/kernel.bin }' >> $(ISO_DIR)/boot/grub/grub.cfg
+	$(GRUB) -o $(ISO_NAME) $(ISO_DIR)
 
 clean:
-	rm -rf *.o kernel.bin iso PoroshenkoOS.iso
+	rm -f *.o kernel.bin
+	rm -rf $(ISO_DIR)
+	rm -f $(ISO_NAME)
+
+.PHONY: all clean
