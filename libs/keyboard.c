@@ -1,5 +1,4 @@
 #include "keyboard.h"
-#include "vga.h"
 
 unsigned char last_scancode = 0;
 
@@ -16,30 +15,17 @@ static inline unsigned char inb(unsigned short port) {
     return result;
 }
 
-void keyboard_handler(void) {
-    unsigned char scancode = inb(KEYBOARD_PORT);
+char keyboard_getchar(void) {
+    unsigned char status;
+    unsigned char scancode;
 
-    if (scancode != last_scancode) {
-        last_scancode = scancode;
+    do {
+        status = inb(0x64);      
+    } while ((status & 1) == 0);
 
-        if (scancode & 0x80) return; // клавиша отпущена
+    scancode = inb(KEYBOARD_PORT);
 
-        char symbol = scancode_to_ascii[scancode];
-        if (symbol) {
-            if (symbol == '\b') {
-                // backspace
-                if (cursor > 0) {
-                    cursor -= 2;
-                    VIDMEM[cursor] = ' ';
-                    VIDMEM[cursor+1] = 0x07;
-                    cursor -= 2;
-                }
-            } else if (symbol == '\n') {
-                // enter
-                cursor = (cursor / (80*2) + 1) * (80*2);
-            } else {
-                putchar(symbol);
-            }
-        }
-    }
+    if (scancode & 0x80) return 0;
+
+    return scancode_to_ascii[scancode];
 }

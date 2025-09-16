@@ -12,6 +12,11 @@ void printstr(const char *str) {
     }
 }
 
+void newline() {
+    cursor = (cursor / (80*2) + 1) * (80*2);
+}
+
+
 void putchar(char c) {
     VIDMEM[cursor] = c;
     VIDMEM[cursor+1] = 0x07;

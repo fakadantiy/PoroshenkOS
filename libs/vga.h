@@ -7,3 +7,4 @@ extern unsigned int cursor;
 void printstr(const char *str);
 void putchar(char c);
 void clearscreen(void);
+void newline();
