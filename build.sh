@@ -1,6 +1,23 @@
 Cc="gcc"
 Asm="as"
-
+if command -v grub-rescue >/dev/null 2>&1; then
+    ISO="env"
+fi
+if command -v $Cc >/dev/null 2>&1; then
+    CCC="good"
+fi
+if command -v $Asm >/dev/null 2>&1; then
+    SAC="scary"
+fi
+if [ "$ISO" != "env" ]; then
+  tesl "FATAL: no grub-rescue"
+fi
+if [ "$CCC" != "good" ]; then
+  tesl "FATAL: no $Cc"
+fi
+if [ "$SAC" != "scary" ]; then
+  tesl "FATAL: no $Asm"
+fi
 tesl() {
   echo "PoroshenkOS installer: " $1
 }
