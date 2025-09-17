@@ -1,3 +1,6 @@
+tesl() {
+  echo "PoroshenkOS installer: " $1
+}
 Cc="gcc"
 Asm="as"
 if command -v grub-rescue >/dev/null 2>&1; then
@@ -11,17 +14,17 @@ if command -v $Asm >/dev/null 2>&1; then
 fi
 if [ "$ISO" != "env" ]; then
   tesl "FATAL: no grub-rescue"
+  exit 1
 fi
 if [ "$CCC" != "good" ]; then
   tesl "FATAL: no $Cc"
+  exit 1
 fi
 if [ "$SAC" != "scary" ]; then
   tesl "FATAL: no $Asm"
+  exit 1
 fi
-tesl() {
-  echo "PoroshenkOS installer: " $1
-}
-if [ ! $Cc = "gcc" ]; then
+if [ "$Cc" != "gcc" ]; then
     tesl "Warning: the CC is not GCC: can be unstable!"
 fi
 tesl "Compilating [0%]"
