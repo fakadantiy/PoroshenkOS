@@ -7,3 +7,7 @@ int strcmp(const char* s1, const char* s2) {
 	}
 	return *(unsigned char*)s1 - *(unsigned char*)s2;;
 }
+
+void strcpy(char* d, const char* s) {
+    while ((*d++ = *s++));
+}

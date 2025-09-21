@@ -4,6 +4,6 @@
 
 void faka(void) {
     clearscreen();
-    printstr("FUCKING POROSHENKOS 2.0!!!");
+    printstr("Hello, and welcome to the PoroshenkOS 1.1.3");
     terminal_run();
 }

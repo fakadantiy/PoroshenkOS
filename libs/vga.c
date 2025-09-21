@@ -3,10 +3,22 @@
 unsigned int cursor;
 
 void printstr(const char *str) {
+    newline();
     unsigned int j = 0;
     while (str[j] != '\0') {
         VIDMEM[cursor] = str[j];
-        VIDMEM[cursor+1] = 0x07;
+	VIDMEM[cursor+1] = 0x07;
+        ++j;
+        cursor += 2;
+    }
+}
+
+void printclr(const char *str, unsigned char clr) {
+    newline();
+    unsigned int j = 0;
+    while (str[j] != '\0') {
+        VIDMEM[cursor] = str[j];
+        VIDMEM[cursor+1] = clr;
         ++j;
         cursor += 2;
     }

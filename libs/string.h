@@ -1,3 +1,7 @@
-#pragma once
+#ifndef STRING_H
+#define STRING_H
 
 int strcmp(const char* s1, const char* s2);
+void strcpy(char* d, const char* s);
+
+#endif

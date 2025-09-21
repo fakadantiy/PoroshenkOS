@@ -1,43 +1,60 @@
 #include "keyboard.h"
 #include "vga.h"
 #include "string.h"
+#include "fs.h"
 
-char buf[128]; // в квадратных скобках если че размер буффера
+char buf[128];
 int len = 0;
 
 void terminal_run(void) {
-    newline();
     printstr("> ");
+    char c;
     while (1) {
-        char c = keyboard_getchar();
+        c = keyboard_getchar();
         if (!c) continue;
-
-        if (c == '\n') {
+	
+	switch (c) {
+        case '\n' :
             buf[len] = 0;
 
-            if (strcmp(buf, "help") == 0) {
-		newline();
-                printstr("help - show this");
-	    } else if (strcmp(buf, "putin") == 0) {
-		newline();
-		printstr("O VELIKIY PUTIN+POROSHENKO");
-            } else {
-		newline();
-                printstr("unknown");
+            char *cmd = buf;
+            char *arg = 0;
+            for (int i = 0; i < len; i++) {
+                if (buf[i] == ' ') {
+                    buf[i] = 0;      // конец строки для команды
+                    arg = &buf[i+1]; // аргумент после пробела
+                    break;
+                }
             }
-	    newline();
+
+            if (strcmp(cmd, "help") == 0) {
+                printstr("help - show this");
+	    } else if (strcmp(cmd, "ls") == 0) {
+		fs_ls();
+	    } else if (strcmp(cmd, "mk") == 0) {
+		if (arg) fs_create(arg);
+		else printclr("No filename", 0x4);
+	    } else if (strcmp(cmd, "del") == 0) {
+		if (arg) fs_delete(arg);
+		else printclr("No filename", 0x4);
+            } else {
+                printclr("Unknown command", 0x4);
+            }
             len = 0;
             printstr("> ");
-        } else if (c == '\b') {
+	    break;
+	case '\b':
 	    if (len > 0) {
 		len--;
 		cursor -= 2;
 		putchar(' ');
 		cursor -= 2;
 	    }
-	} else {
+	    break;
+	default:
             if (len < 127) buf[len++] = c;
             putchar(c);
-        }
-    }
+	}
+    }	
 }
+
