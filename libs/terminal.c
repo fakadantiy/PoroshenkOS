@@ -28,17 +28,17 @@ void terminal_run(void) {
             }
 
             if (strcmp(cmd, "help") == 0) {
-                printstr("help - show this");
+                printstr("help - show this \n");
 	    } else if (strcmp(cmd, "ls") == 0) {
 		fs_ls();
 	    } else if (strcmp(cmd, "mk") == 0) {
 		if (arg) fs_create(arg);
-		else printclr("No filename", 0x4);
+		else printclr("No filename \n", 0x4);
 	    } else if (strcmp(cmd, "del") == 0) {
 		if (arg) fs_delete(arg);
-		else printclr("No filename", 0x4);
+		else printclr("No filename \n", 0x4);
             } else {
-                printclr("Unknown command", 0x4);
+                printclr("\n Unknown command \n", 0x4);
             }
             len = 0;
             printstr("> ");
@@ -47,13 +47,13 @@ void terminal_run(void) {
 	    if (len > 0) {
 		len--;
 		cursor -= 2;
-		putchar(' ');
+		putchar(' ', 0x07);
 		cursor -= 2;
 	    }
 	    break;
 	default:
             if (len < 127) buf[len++] = c;
-            putchar(c);
+            putchar(c, 0x07);
 	}
     }	
 }

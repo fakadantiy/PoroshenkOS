@@ -5,10 +5,11 @@
 
 extern unsigned int cursor;
 
+void scroll();
 void printstr(const char *str);
 void printclr(const char *str, unsigned char clr);
-void putchar(char c);
+void putchar(char c, unsigned char clr);
 void clearscreen(void);
-void newline();
+void disable_cursor();
 
 #endif
