@@ -7,7 +7,7 @@ char buf[128];
 int len = 0;
 
 void terminal_run(void) {
-    printstr("> ");
+    printstr("\n> ");
     char c;
     while (1) {
         c = keyboard_getchar();
@@ -32,11 +32,15 @@ void terminal_run(void) {
 	    } else if (strcmp(cmd, "ls") == 0) {
 		fs_ls();
 	    } else if (strcmp(cmd, "mk") == 0) {
-		if (arg) fs_create(arg);
-		else printclr("No filename \n", 0x4);
+		if (arg) {
+			fs_create(arg); 
+			printstr("\nCreated file\n");
+		} else printclr("No filename \n", 0x4);
 	    } else if (strcmp(cmd, "del") == 0) {
-		if (arg) fs_delete(arg);
-		else printclr("No filename \n", 0x4);
+		if (arg) { 
+			fs_delete(arg); 
+			printstr("\nDeleted file\n");
+		} else printclr("No filename \n", 0x4);
             } else {
                 printclr("\n Unknown command \n", 0x4);
             }

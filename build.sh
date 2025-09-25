@@ -16,6 +16,8 @@ $Cc -m32 -ffreestanding -c libs/vga.c -o vga.o
 tesl "Compilating [40%]"
 $Cc -m32 -ffreestanding -c libs/fs.c -o fs.o
 tesl "Compilating [50%]"
+$Cc -m32 -ffreestanding -c libs/syscall.c -o syscall.o
+tesl "Compilating [55%]"
 $Cc -m32 -ffreestanding -c libs/keyboard.c -o keyboard.o
 tesl "Compilating [60%]"
 $Cc -m32 -ffreestanding -c libs/string.c -o string.o
@@ -27,7 +29,7 @@ $Asm --32 boot.s -o boot.o
 tesl "Compilated bootloader"
 
 tesl "Linking"
-ld -m elf_i386 -T linker.ld -nostdlib -o kernel.bin boot.o kernel.o vga.o fs.o keyboard.o string.o terminal.o
+ld -m elf_i386 -T linker.ld -nostdlib -o kernel.bin boot.o kernel.o vga.o fs.o keyboard.o string.o terminal.o syscall.o
 if [ ! -d isodir/boot/grub ]; then
   mkdir -p isodir/boot/grub
 fi

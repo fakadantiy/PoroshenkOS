@@ -45,10 +45,12 @@ const char* fs_read(const char* name) {
     return 0;
 }
 
-void fs_ls(void) {
+void fs_ls() {	
     for (int i = 0; i < MAX_FILES; i++) {
         if (fs.files[i].used) {
-            printstr(fs.files[i].name);
+		printstr("\n");
+        	printstr(fs.files[i].name);
+   	 	printstr("\n");
         }
     }
 }

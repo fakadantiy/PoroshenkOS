@@ -21,6 +21,6 @@ int fs_create(const char* name);
 int fs_delete(const char* name);
 int fs_write(const char* name, const char* data);
 const char* fs_read(const char* name);
-void fs_ls(void);
+void fs_ls();
 
 #endif
