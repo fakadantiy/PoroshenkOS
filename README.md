@@ -5,47 +5,61 @@
 [![Version](https://img.shields.io/badge/version-1.1.3-blue.svg)](#)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](#)
 
-
 ---
-**PoroshenkOS** — лёгкая и минималистичная ОС собственного производства дающая своему пользователю абсолютный контроль, эффективность и производительность.
-
+**PoroshenkOS** - lightweight and minimalistic OS that gives its user **absolute control**, **maximum efficiency** and **perfomance.**
 ---
 
-## Возможности
-- Создание, удаление файлов
-- Полный контроль над системой
-- Простота в изучении
-- Максимальная эффективность и производительность
-- Легкое и простое изучение кода
-- Создание своего дистрибутива PoroshenkOS / Модификация PoroshenkOS
+## Installing
+
+To get the PoroshenkOS .iso, you can **build it yourself** or just download the .iso file from the [site.](https://fakadantiy.github.io/poroshenkos.github.io)
+To build it yourself, you can scroll down for the tutorial for it.
+> Important note, PoroshenkOS will **not** get any new .iso files on the Releases. From now, new versions will upload **only** on site.
 
 ---
-## Комманды в терминале
+## Features
+- Creating, deleting files
+- Absolute **control** over the **system**.
+- Easy to learn
+- **Maximum** efficiency and performance.
+- *Easy* and *Simple* to create **your own** modification of PoroshenkOS. 
 
-- **ls** показывает доступные файлы в нынешней директории
-- **mk** создает файл в нынешней директории
-- **del** удаляет файл
+---
+## Commands in terminal
+
+- **ls** Showing all files in the directory.
+- **mk** Creating file in the directory.
+- **del** Deleting file in the directory.
 ---
 
-## 🛠️ Сборка и запуск
+## Building and launch.
+
+> There *is* already an iso files of all the PoroshenkOS versions on the [site](https://fakadantiy.github.io/poroshenkos.github.io)
+> 
+> but you *can* build it yourself.
 
 ### Linux
-1. Установи любой С компилятор (Обычно он уже предустановлен) Рекомендуется gcc, так-как с другими компиляторами могут быть проблемы. 
-2. Собери образ:
-'''./build.sh'''
-3. Запусти iso образ через любой эмулятор (Рекомендуется QEMU)
+1. Install *Any* C compiler (Default, it is pre-installed) Recommended GCC, because other *can* be **unstable**. 
+2. Build it:
+<code>./build.sh</code>
+> If it says "Access denied" or something like that, type <code>chmod +x build.sh</code> and try again. If it's doesn't work, report it on Github Issues.
+3. Launch .iso file in any emulator(Recommended QEMU)
 
 ### Windows (W.I.P)
+Sorry, no windows for now :(
 
-## Модификация/Создание дистрибутива PoroshenkOS
+## Modifying PoroshenkOS
 
-Модифицирование PoroshenkOS является несложным делом, благодаря **Open-Source** коду и его простоте.
-Модификации PoroshenkOS могут распространяться бесплатно везде и всегда
-Только не забудь перед этим прочитать лицензию.
+Modifying PoroshenkOS isn't hard, thanks to **Open-Source** code.
+Modifications of PoroshenkOS can always spread **free** and **open-source** everywhere.
+Don't forged to read the license to spread it.
 
-## Помощь PoroshenkOS
+## Contributing PoroshenkOS
 
-Если вы как либо хотите помочь PoroshenkOS вы можете:
+If you want to contribute to the development of PoroshenkOS you can:
 
-- Репортить баги через Github issues
-- Делать пулл реквесты, принося что-либо полезное в проект
+- Report bugs with Github Issues
+- Suggest improvements or new features on GitHub.
+
+## License
+PoroshenkOS has got it's **own** license, not MIT, not any other.
+If you wanna modify PoroshenkOS and spread it, **Dont. Forget. To. Read. License.**
