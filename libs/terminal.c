@@ -1,3 +1,6 @@
+// who the fuck wrote ts
+// what the actual fuck is the ident
+
 #include "keyboard.h"
 #include "vga.h"
 #include "string.h"
@@ -29,12 +32,13 @@ _Noreturn void terminal_run(void) {
             len = 0;
             printstr("> ");
         } else if (c == '\b') {
-	    if (len > 0) {
-		len--;
-		cursor -= 2;
-		putchar(' ');
-		cursor -= 2;
-	    }
+		    if (len > 0) {
+				len--;
+				cursor -= 2;
+				putchar(' ');
+				cursor -= 2;
+				update_hw_cursor();
+		    }
 	} else {
             if (len < 127) buf[len++] = c;
             putchar(c);

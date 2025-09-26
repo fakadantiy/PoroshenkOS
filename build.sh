@@ -43,24 +43,29 @@ fi
 #    tesl "Warning: the CC is not GCC: can be unstable!"
 #fi
 #
-tesl "Compilating [0%]"
+
+tesl "Compiling RoshenLibC [0%]"
+#$Cc -m32 -ffreestanding -march=pentium -c libs/RoshenLibC/sys/io.c -o io.o
+# так пусто
+tesl "Compiling RoshenLibC [100%]"
+tesl "Compiling [0%]"
 $Cc -m32 -ffreestanding -march=pentium -fwhole-program -c kernel.c -o kernel.o # flto нельзя(
 # -fwhole-program тоже нельзя ибо какой-то молдован писал загрузчик и он нихуя не загрузчик, требует основной код, а на ассемблер -fwhole-program ставить нельзя
 # так меня это бесит что по русский заговорил
 # так стоп бля, я могу просто аттрибут поставить
 # ебать я гений
-tesl "Compilating [20%]"
+tesl "Compiling [20%]"
 $Cc -m32 -ffreestanding -march=pentium -c libs/vga.c -o vga.o
-tesl "Compilating [40%]"
+tesl "Compiling [40%]"
 $Cc -m32 -ffreestanding -march=pentium -c libs/keyboard.c -o keyboard.o
-tesl "Compilating [60%]"
+tesl "Compiling [60%]"
 $Cc -m32 -ffreestanding -march=pentium -c libs/string.c -o string.o
-tesl "Compilating [80%]"
+tesl "Compiling [80%]"
 $Cc -m32 -ffreestanding -march=pentium -c libs/terminal.c -o terminal.o
-tesl "Compilating [100%]"
+tesl "Compiling [100%]"
 
 $Asm --32 boot.s -o boot.o
-tesl "Compilated bootloader"
+tesl "Compiled bootloader"
 
 tesl "Linking"
 ld -m elf_i386 -T linker.ld -nostdlib -o kernel.bin boot.o kernel.o vga.o keyboard.o string.o terminal.o
@@ -81,7 +86,7 @@ EOF
 	tesl "Making ISO"
 	grub-mkrescue -o poroshenkos.iso isodir
 fi
-tesl "You sucessfully built PoroshenkOS"
+tesl "You've sucessfully built PoroshenkOS"
 
 if [ -e dev_skip_iso_and_run_qemu ]; then
 	qemu-system-i386 -machine q35 -m 512 -nodefaults -kernel kernel.bin -display gtk -device virtio-vga -serial none -parallel none -net none
