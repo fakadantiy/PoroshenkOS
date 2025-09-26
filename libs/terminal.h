@@ -1,3 +1,3 @@
-# pragma once
+#pragma once
 
-void terminal_run(void);
+_Noreturn void terminal_run(void);
