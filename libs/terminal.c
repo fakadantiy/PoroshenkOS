@@ -5,7 +5,7 @@
 char buf[128]; // в квадратных скобках если че размер буффера
 int len = 0;
 
-void terminal_run(void) {
+_Noreturn void terminal_run(void) {
     newline();
     printstr("> ");
     while (1) {
