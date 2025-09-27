@@ -15,12 +15,19 @@ fi
 if command -v xorriso >/dev/null 2>&1; then
     WOW="Ebalo"
 fi
+if command -v mformat >/dev/null 2>&1; then
+    WOE="Qbalo"
+fi
 if [ "$ISO" != "env" ]; then
   tesl "FATAL: no grub-mkrescue"
   exit 1
 fi
 if [ "$WOW" != "Ebalo" ]; then
   tesl "FATAL: no xorriso"
+  exit 1
+fi
+if [ "$WOE" != "Qbalo" ]; then
+  tesl "FATAL: no mformat: install mtools !"
   exit 1
 fi
 if [ "$CCC" != "good" ]; then
