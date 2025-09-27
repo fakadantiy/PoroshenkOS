@@ -3,7 +3,7 @@ tesl() {
 }
 Cc="gcc"
 Asm="as"
-if command -v grub-rescue >/dev/null 2>&1; then
+if command -v grub-mkrescue >/dev/null 2>&1; then
     ISO="env"
 fi
 if command -v $Cc >/dev/null 2>&1; then
@@ -13,7 +13,7 @@ if command -v $Asm >/dev/null 2>&1; then
     SAC="scary"
 fi
 if [ "$ISO" != "env" ]; then
-  tesl "FATAL: no grub-rescue"
+  tesl "FATAL: no grub-mkrescue"
   exit 1
 fi
 if [ "$CCC" != "good" ]; then
