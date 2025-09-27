@@ -12,8 +12,15 @@ fi
 if command -v $Asm >/dev/null 2>&1; then
     SAC="scary"
 fi
+if command -v xorriso >/dev/null 2>&1; then
+    WOW="Ebalo"
+fi
 if [ "$ISO" != "env" ]; then
   tesl "FATAL: no grub-mkrescue"
+  exit 1
+fi
+if [ "$WOW" != "Ebalo" ]; then
+  tesl "FATAL: no xorriso"
   exit 1
 fi
 if [ "$CCC" != "good" ]; then
