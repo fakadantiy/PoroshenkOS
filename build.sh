@@ -29,13 +29,28 @@ Asm=$($Cc -print-prog-name=as)
 if command -v $Asm >/dev/null 2>&1; then
     SAC="scary"
 fi
+
 if [ ! -e dev_skip_iso_and_run_qemu ]; then
 	if [ "$ISO" != "env" ]; then
 	  #tesl "FATAL: no grub-mkrescue"
 	  tesl "FATAL: no limine"
 	  exit 1
 	fi
+  if command -v xorriso >/dev/null 2>&1; then
+      WOW="Ebalo"
+  fi
+  if command -v mformat >/dev/null 2>&1; then
+      WOE="Qbalo"
+  fi
+  if [ "$WOW" != "Ebalo" ]; then
+    tesl "FATAL: no xorriso"
+    exit 1
+  fi
+  if [ "$WOE" != "Qbalo" ]; then
+    tesl "FATAL: no mformat: install mtools !"
+    exit 1
 fi
+
 if [ "$CCC" != "good" ]; then
   tesl "FATAL: no $Cc"
   exit 1
