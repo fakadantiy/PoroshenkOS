@@ -15,8 +15,8 @@ for d in "${dirs[@]}"; do
 	done
 done
 
-#if command -v grub-mkrescue >/dev/null 2>&1; then
-if command -v limine >/dev/null 2>&1; then
+if command -v grub-mkrescue >/dev/null 2>&1; then
+#if command -v limine >/dev/null 2>&1; then
     ISO="env"
 fi
 if command -v xxd >/dev/null 2>&1; then
@@ -32,8 +32,8 @@ fi
 
 if [ ! -e dev_skip_iso_and_run_qemu ]; then
 	if [ "$ISO" != "env" ]; then
-		#tesl "FATAL: no grub-mkrescue"
-		tesl "FATAL: no limine"
+		tesl "FATAL: no grub-mkrescue"
+		#tesl "FATAL: no limine"
 		exit 1
 	fi
 	if command -v xorriso >/dev/null 2>&1; then
@@ -106,45 +106,53 @@ tesl "Compiled bootloader"
 
 tesl "Linking"
 ld -m elf_i386 -T linker.ld -nostdlib -o kernel.bin boot.o kernel.o vga.o keyboard.o terminal.o
-#if [ ! -d isodir/boot/grub ]; then
-#  mkdir -p isodir/boot/grub
-#fi
+if [ ! -d isodir/boot/grub ]; then
+  mkdir -p isodir/boot/grub
+fi
 
 if [ ! -e dev_skip_iso_and_run_qemu ]; then
-	rm -rf isodir
-	mkdir -p isodir/boot
+#	rm -rf isodir
+#	mkdir -p isodir/boot
 	tesl "Copying the kernel"
 	cp kernel.bin isodir/boot/kernel.bin
 
 	tesl "Making menuentry for PoroshenkOS"
-#	cat > isodir/boot/grub/grub.cfg << EOF
-#menuentry "POROSHENKOS" {
-#	multiboot /boot/kernel.bin
-#}
-#EOF
-	cat > isodir/boot/limine.conf << EOF
-wallpaper: boot():/boot/atb-gordon.png
-wallpaper_style: stretched
+	cat > isodir/boot/grub/grub.cfg << EOF
+insmod all_video
+insmod gfxterm
+insmod gfxterm_background
+insmod png
+set gfxmode=auto
+terminal_output gfxterm
+background_image /boot/atb-gordon.png
 
-/PoroshenkOS
-protocol: multiboot
-path: boot():/boot/kernel.bin
-textmode: yes
+menuentry "POROSHENKOS" {
+	multiboot /boot/kernel.bin
+}
 EOF
+#	cat > isodir/boot/limine.conf << EOF
+#wallpaper: boot():/boot/atb-gordon.png
+#wallpaper_style: stretched
+#
+#/PoroshenkOS
+#protocol: multiboot
+#path: boot():/boot/kernel.bin
+#textmode: yes
+#EOF
 
 	tesl "Making ISO"
-	cp /usr/share/limine/limine-bios-cd.bin isodir/boot/
-	cp /usr/share/limine/limine-uefi-cd.bin isodir/boot/
-	cp /usr/share/limine/limine-bios.sys isodir/boot/
+#	cp /usr/share/limine/limine-bios-cd.bin isodir/boot/
+#	cp /usr/share/limine/limine-uefi-cd.bin isodir/boot/
+#	cp /usr/share/limine/limine-bios.sys isodir/boot/
 	cp ATB\ gordon.png isodir/boot/atb-gordon.png
-	#grub-mkrescue -o poroshenkos.iso isodir
-	xorriso -as mkisofs -R -r -J -b boot/limine-bios-cd.bin \
-	-no-emul-boot -boot-load-size 4 -boot-info-table -hfsplus \
-	-apm-block-size 2048 --efi-boot boot/limine-uefi-cd.bin \
-	-efi-boot-part --efi-boot-image --protective-msdos-label \
-	isodir -o poroshenkos.iso
+	grub-mkrescue -o poroshenkos.iso isodir
+#	xorriso -as mkisofs -R -r -J -b boot/limine-bios-cd.bin \
+#	-no-emul-boot -boot-load-size 4 -boot-info-table -hfsplus \
+#	-apm-block-size 2048 --efi-boot boot/limine-uefi-cd.bin \
+#	-efi-boot-part --efi-boot-image --protective-msdos-label \
+#	isodir -o poroshenkos.iso
 
-	limine bios-install poroshenkos.iso
+#	limine bios-install poroshenkos.iso
 fi
 tesl "You've sucessfully built PoroshenkOS"
 
