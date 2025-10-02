@@ -1,10 +1,12 @@
 #include "libs/keyboard.h"
 #include "libs/vga.h"
 #include "libs/terminal.h"
+#include "libs/fs.h"
 
 void faka(void) {
     clearscreen();
     disable_cursor();
-    printstr("Hello, and welcome to the PoroshenkOS 1.1.3");
+    fs_init();
+    printstr("Hello, and welcome to the [UNKNOWN] 1.0");
     terminal_run();
 }

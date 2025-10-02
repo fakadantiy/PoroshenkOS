@@ -1,26 +1,27 @@
 #ifndef FS_H
 #define FS_H
 
-#define MAX_FILES 128
-#define MAX_FILENAME 32
-#define MAX_CONTENT 512
+#define SECTOR_SIZE 512
+#define FAT12_ENTRY_SIZE 32
+#define FAT12_ROOT_ENTRIES 224
 
+// FAT12 запись директории (8.3 формат)
 typedef struct {
-    char name[MAX_FILENAME];
-    char content[MAX_CONTENT];
-    int used;
-} File;
+    char name[11];         // Имя (8) + расширение (3)
+    unsigned char attr;    // Атрибуты (0x10 = DIR, 0x20 = FILE)
+    char reserved[10];     // Зарезервировано
+    unsigned short time;   // Время
+    unsigned short date;   // Дата
+    unsigned short startCluster;
+    unsigned int fileSize;
+} __attribute__((packed)) FAT12_DirEntry;
 
-typedef struct {
-    File files[MAX_FILES];
-} FileSystem;
-
-extern FileSystem fs;
-
-int fs_create(const char* name);
-int fs_delete(const char* name);
-int fs_write(const char* name, const char* data);
-const char* fs_read(const char* name);
+void fs_init();
+int fs_create(const char* path);
+int fs_delete(const char* path);
+int fs_rmdir(const char* path);
+int fs_mkdir(const char* path);
+int fs_cd(const char* name);
 void fs_ls();
 
 #endif
