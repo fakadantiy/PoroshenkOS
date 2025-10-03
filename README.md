@@ -4,16 +4,20 @@
 
 [![Version](https://img.shields.io/badge/version-1.1.3-blue.svg)](#)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](#)
+[![No longer supported](https://img.shields.io/badge/no_longer-supported-red)](#)
 
 ---
-**PoroshenkOS** - lightweight and minimalistic OS that gives its user **absolute control**, **maximum efficiency** and **perfomance.**
----
+# That's important!
 
+**PoroshenkOS development is stopped, and will dont get any updates anymore. However, there is [EnvWare](https://github.com/fakadantiy/EnvWare)**
+**EnvWare will continue getting updates, and being supported.**
+
+---
 ## Installing
 
-To get the PoroshenkOS .iso, you can **build it yourself** or just download the .iso file from the [site.](https://fakadantiy.github.io/poroshenkos.github.io)
+To get the PoroshenkOS .iso, you can **build it yourself** or just download the .iso file from the [![Site](https://img.shields.io/badge/site-closed-red)](#)
 To build it yourself, you can scroll down for the tutorial for it.
-> Important note, PoroshenkOS will **not** get any new .iso files on the Releases. From now, new versions will upload **only** on site.
+> ~~Important note, PoroshenkOS will **not** get any new .iso files on the Releases. From now, new versions will upload **only** on site.~~
 
 ---
 ## Features
@@ -33,7 +37,7 @@ To build it yourself, you can scroll down for the tutorial for it.
 
 ## Building and launch.
 
-> There *is* already an iso files of all the PoroshenkOS versions on the [site](https://fakadantiy.github.io/poroshenkos.github.io)
+> There *is* already an iso files of all the PoroshenkOS versions on the [![Site](https://img.shields.io/badge/site-closed-red)](#)
 > 
 > but you *can* build it yourself.
 
