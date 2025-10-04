@@ -1,0 +1,7 @@
+*.o
+kernel.bin
+dev_skip_iso_and_run_qemu
+isodir
+*.iso
+libs/tmp.h
+libs/commodore64.h
